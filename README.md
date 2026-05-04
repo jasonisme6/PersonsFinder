@@ -36,6 +36,11 @@ gradlew.bat bootRun
 
 Application starts at: `http://localhost:8080`
 
+### 4. Access MongoDB Console (Optional)
+Open browser: `http://localhost:8081`
+- Username: `admin`
+- Password: `admin123`
+
 ---
 
 ## 📋 API Endpoints
@@ -106,6 +111,25 @@ GET /api/v1/persons/nearby?latitude=40.7128&longitude=-74.0060&radius=10
 
 ## 🗄️ Database Setup
 
+### MongoDB Web Console
+
+Access **Mongo Express** (web-based admin panel):
+
+```
+http://localhost:8081
+```
+
+**Credentials:**
+- Username: `admin`
+- Password: `admin123`
+
+**Features:**
+- Browse databases and collections
+- View/edit/delete documents
+- Run queries
+- View indexes
+- Export data
+
 ### Seed 10,000 Records
 
 ```bash
@@ -126,9 +150,31 @@ set SEED_COUNT=1000
 seed-database.bat
 ```
 
+### MongoDB Command Line (Alternative)
+
+```bash
+# Connect to MongoDB shell
+docker exec -it persons-finder-mongodb mongosh -u admin -p password123
+
+# Switch to database
+use personsdb
+
+# View collections
+show collections
+
+# Count documents
+db.persons.countDocuments()
+
+# View indexes
+db.persons.getIndexes()
+
+# Sample query
+db.persons.find().limit(5)
+```
+
 ### Verify Indexes
 ```bash
-docker exec -it mongodb mongosh -u admin -p password123
+docker exec -it persons-finder-mongodb mongosh -u admin -p password123
 
 use personsdb
 db.persons.getIndexes()

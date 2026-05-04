@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(./gradlew compileKotlin)",
-      "Bash(./gradlew clean *)"
+      "Bash(./gradlew clean *)",
+      "Bash(docker-compose down *)",
+      "Bash(docker-compose up *)"
     ]
   }
 }
