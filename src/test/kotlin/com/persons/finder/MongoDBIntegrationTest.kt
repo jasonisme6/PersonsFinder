@@ -62,7 +62,7 @@ class MongoDBIntegrationTest {
             jobTitle = "Software Engineer",
             hobbies = listOf("coding", "hiking"),
             bio = "A passionate developer",
-            location = Location(40.7128, -74.0060).toGeo()
+            location = Location(referenceId = 0L, latitude = 40.7128, longitude = -74.0060).toGeo()
         )
 
         // When
@@ -84,7 +84,7 @@ class MongoDBIntegrationTest {
             jobTitle = "Designer",
             hobbies = listOf("art"),
             bio = "Creative designer",
-            location = Location(40.7128, -74.0060).toGeo() // NYC
+            location = Location(referenceId = 0L, latitude = 40.7128, longitude = -74.0060).toGeo() // NYC
         )
 
         val person2 = PersonDocument(
@@ -146,7 +146,7 @@ class MongoDBIntegrationTest {
             jobTitle = "Travel Blogger",
             hobbies = listOf("travel"),
             bio = "Always on the move",
-            location = Location(40.7128, -74.0060).toGeo()
+            location = Location(referenceId = 0L, latitude = 40.7128, longitude = -74.0060).toGeo()
         )
 
         val saved = personRepository.save(person)
