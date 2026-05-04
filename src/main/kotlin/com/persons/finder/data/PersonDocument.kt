@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexed
 data class PersonDocument(
     @Id
     val id: String? = null,
+    @org.springframework.data.mongodb.core.index.Indexed(unique = true)
     val numericId: Long, // Stable numeric ID for API responses
     val name: String,
     val jobTitle: String,

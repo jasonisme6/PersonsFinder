@@ -22,25 +22,42 @@ class PersonsServiceMongoImpl(
     }
 
     override fun save(person: Person): Person {
-        // Use existing ID or generate new numeric ID
-        val numericId = if (person.id == 0L) {
-            System.currentTimeMillis() + (Math.random() * 1000).toLong()
+        // Check if this is an update (person.id != 0) or a new person
+        if (person.id != 0L) {
+            // Update: find existing document and preserve its MongoDB ID
+            val existingDoc = personRepository.findByNumericId(person.id)
+            if (existingDoc != null) {
+                // Update existing document
+                val updatedDoc = PersonDocument(
+                    id = existingDoc.id, // Keep original MongoDB ID
+                    numericId = person.id,
+                    name = person.name,
+                    jobTitle = person.jobTitle,
+                    hobbies = person.hobbies,
+                    bio = person.bio,
+                    location = person.location?.toGeo()
+                )
+                val savedDocument = personRepository.save(updatedDoc)
+                return savedDocument.toPerson()
+            } else {
+                // numericId not found, cannot update non-existent person
+                throw IllegalArgumentException("Person with id ${person.id} not found")
+            }
         } else {
-            person.id
+            // Create new person with unique numericId
+            val numericId = System.nanoTime() + Thread.currentThread().id
+            val document = PersonDocument(
+                id = null, // Let MongoDB generate ID
+                numericId = numericId,
+                name = person.name,
+                jobTitle = person.jobTitle,
+                hobbies = person.hobbies,
+                bio = person.bio,
+                location = person.location?.toGeo()
+            )
+            val savedDocument = personRepository.save(document)
+            return savedDocument.toPerson()
         }
-
-        val document = PersonDocument(
-            id = if (person.id == 0L) null else person.id.toString(),
-            numericId = numericId,
-            name = person.name,
-            jobTitle = person.jobTitle,
-            hobbies = person.hobbies,
-            bio = person.bio,
-            location = person.location?.toGeo()
-        )
-
-        val savedDocument = personRepository.save(document)
-        return savedDocument.toPerson()
     }
 
     override fun getAll(): List<Person> {

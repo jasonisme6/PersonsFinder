@@ -36,6 +36,13 @@ class MongoIndexConfig(
 
         indexOps.ensureIndex(geospatialIndex)
 
+        // Unique index on numericId for efficient lookups
+        val numericIdIndex = Index()
+            .on("numericId", Sort.Direction.ASC)
+            .unique()
+
+        indexOps.ensureIndex(numericIdIndex)
+
         // Index on name for search queries
         val nameIndex = Index()
             .on("name", Sort.Direction.ASC)
@@ -44,6 +51,7 @@ class MongoIndexConfig(
 
         println("✅ MongoDB indexes created successfully")
         println("   - Geospatial 2dsphere index on 'location'")
+        println("   - Unique index on 'numericId'")
         println("   - Ascending index on 'name'")
     }
 }
