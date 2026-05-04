@@ -13,7 +13,10 @@
       "Bash(findstr 26144)",
       "Bash(taskkill *)",
       "Bash(mongosh *)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(./gradlew test *)",
+      "Bash(awk -F'\"' '{total+=$4; skipped+=$6; failures+=$8} END {print \"Total: \" total \" tests, \" skipped \" skipped, \" failures \" failures, \" \\(total-skipped-failures\\) \" passed\"}')",
+      "Bash(awk -F'\"' '{total+=$4; skipped+=$6; failures+=$8} END {print \"✓ Total: \" total \" tests\\\\n✓ Passed: \" \\(total-skipped-failures\\) \" tests\\\\n✓ Skipped: \" skipped \" tests\\\\n✓ Failed: \" failures \" tests\"}')"
     ]
   }
 }
