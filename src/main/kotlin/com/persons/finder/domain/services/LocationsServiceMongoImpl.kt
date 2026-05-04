@@ -39,9 +39,7 @@ class LocationsServiceMongoImpl(
         return personRepository.findByLocationNear(center, distance)
             .mapNotNull { personDoc ->
                 personDoc.location?.let { locationGeo ->
-                    val loc = locationGeo.toLocation()
-                    val dist = calculateDistance(latitude, longitude, loc.latitude, loc.longitude)
-                    loc.copy(referenceId = personDoc.id?.hashCode()?.toLong() ?: 0L)
+                    locationGeo.toLocation(personDoc.numericId)
                 }
             }
             .sortedBy { loc ->

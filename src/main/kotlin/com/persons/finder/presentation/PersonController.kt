@@ -127,10 +127,11 @@ class PersonController @Autowired constructor(
         return ResponseEntity.ok(nearbyPersons)
     }
 
-    // GET /api/v1/persons - Simple test endpoint
+    // GET /api/v1/persons - List all persons
     @GetMapping("")
-    fun getExample(): String {
-        return "Hello Example"
+    fun getAllPersons(): ResponseEntity<List<Person>> {
+        val persons = personsService.getAll()
+        return ResponseEntity.ok(persons)
     }
 
     // Calculates the great-circle distance between two points on Earth using the Haversine formula

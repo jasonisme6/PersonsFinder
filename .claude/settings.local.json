@@ -6,7 +6,14 @@
       "Bash(docker-compose down *)",
       "Bash(docker-compose up *)",
       "Bash(./gradlew build *)",
-      "Bash(./gradlew bootRun *)"
+      "Bash(./gradlew bootRun *)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :8080)",
+      "Bash(tasklist)",
+      "Bash(findstr 26144)",
+      "Bash(taskkill *)",
+      "Bash(mongosh *)",
+      "Bash(curl *)"
     ]
   }
 }

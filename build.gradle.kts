@@ -25,6 +25,9 @@ dependencies {
 	implementation("com.aallam.openai:openai-client:3.6.3")
 	implementation("io.ktor:ktor-client-okhttp:2.3.7")
 
+	// Environment variables from .env file
+	implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+
 	// JSON processing
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 

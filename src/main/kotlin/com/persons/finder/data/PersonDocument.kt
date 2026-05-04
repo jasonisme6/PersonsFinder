@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexed
 data class PersonDocument(
     @Id
     val id: String? = null,
+    val numericId: Long, // Stable numeric ID for API responses
     val name: String,
     val jobTitle: String,
     val hobbies: List<String>,
@@ -47,14 +48,13 @@ data class LocationGeo(
  * Convert PersonDocument to domain Person model
  */
 fun PersonDocument.toPerson(): Person {
-    val personId = this.id?.hashCode()?.toLong() ?: 0L
     return Person(
-        id = personId,
+        id = this.numericId,
         name = this.name,
         jobTitle = this.jobTitle,
         hobbies = this.hobbies,
         bio = this.bio,
-        location = this.location?.toLocation(personId)
+        location = this.location?.toLocation(this.numericId)
     )
 }
 

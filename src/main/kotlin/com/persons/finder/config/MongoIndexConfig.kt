@@ -19,11 +19,20 @@ class MongoIndexConfig(
 
     @PostConstruct
     fun initIndexes() {
+        try {
+            // Drop the entire collection to remove corrupted data
+            mongoTemplate.dropCollection(PersonDocument::class.java)
+            println("🗑️  Dropped existing persons collection")
+        } catch (e: Exception) {
+            println("⚠️  Could not drop collection: ${e.message}")
+        }
+
         val indexOps = mongoTemplate.indexOps(PersonDocument::class.java)
 
-        // Geospatial index for location-based queries
+        // Geospatial 2dsphere index for location-based queries
         // Required for efficient nearby person searches
         val geospatialIndex = GeospatialIndex("location")
+            .typed(org.springframework.data.mongodb.core.index.GeoSpatialIndexType.GEO_2DSPHERE)
 
         indexOps.ensureIndex(geospatialIndex)
 

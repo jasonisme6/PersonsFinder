@@ -13,6 +13,11 @@ import org.springframework.stereotype.Repository
 interface PersonRepository : MongoRepository<PersonDocument, String> {
 
     /**
+     * Find a person by numeric ID
+     */
+    fun findByNumericId(numericId: Long): PersonDocument?
+
+    /**
      * Find all persons within a specified distance from a point
      * @param point Center point (longitude, latitude)
      * @param distance Maximum distance

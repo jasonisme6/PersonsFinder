@@ -18,14 +18,20 @@ class PersonsServiceMongoImpl(
 ) : PersonsService {
 
     override fun getById(id: Long): Person? {
-        return personRepository.findById(id.toString())
-            .map { it.toPerson() }
-            .orElse(null)
+        return personRepository.findByNumericId(id)?.toPerson()
     }
 
     override fun save(person: Person): Person {
+        // Use existing ID or generate new numeric ID
+        val numericId = if (person.id == 0L) {
+            System.currentTimeMillis() + (Math.random() * 1000).toLong()
+        } else {
+            person.id
+        }
+
         val document = PersonDocument(
             id = if (person.id == 0L) null else person.id.toString(),
+            numericId = numericId,
             name = person.name,
             jobTitle = person.jobTitle,
             hobbies = person.hobbies,

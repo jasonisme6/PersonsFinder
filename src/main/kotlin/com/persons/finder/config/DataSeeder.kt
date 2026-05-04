@@ -134,8 +134,10 @@ class DataSeeder {
             longitude = baseCity.second + lonOffset
         )
 
+        val numericId = System.currentTimeMillis() + (Math.random() * 1000).toLong()
         return PersonDocument(
             id = null,
+            numericId = numericId,
             name = name,
             jobTitle = jobTitle,
             hobbies = hobbies,
