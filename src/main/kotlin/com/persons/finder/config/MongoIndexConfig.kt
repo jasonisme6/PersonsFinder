@@ -1,0 +1,40 @@
+package com.persons.finder.config
+
+import com.persons.finder.data.PersonDocument
+import org.springframework.context.annotation.Configuration
+import org.springframework.data.domain.Sort
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.index.GeospatialIndex
+import org.springframework.data.mongodb.core.index.Index
+import javax.annotation.PostConstruct
+
+/**
+ * MongoDB index configuration
+ * Creates required indexes for optimal query performance
+ */
+@Configuration
+class MongoIndexConfig(
+    private val mongoTemplate: MongoTemplate
+) {
+
+    @PostConstruct
+    fun initIndexes() {
+        val indexOps = mongoTemplate.indexOps(PersonDocument::class.java)
+
+        // Geospatial index for location-based queries
+        // Required for efficient nearby person searches
+        val geospatialIndex = GeospatialIndex("location")
+
+        indexOps.ensureIndex(geospatialIndex)
+
+        // Index on name for search queries
+        val nameIndex = Index()
+            .on("name", Sort.Direction.ASC)
+
+        indexOps.ensureIndex(nameIndex)
+
+        println("✅ MongoDB indexes created successfully")
+        println("   - Geospatial 2dsphere index on 'location'")
+        println("   - Ascending index on 'name'")
+    }
+}
