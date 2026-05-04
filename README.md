@@ -27,11 +27,7 @@ set OPENAI_API_KEY=sk-your-key
 
 ### 3. Run Application
 ```bash
-# Linux/macOS
 ./gradlew bootRun
-
-# Windows
-gradlew.bat bootRun
 ```
 
 Application starts at: `http://localhost:8080`
@@ -130,24 +126,26 @@ http://localhost:8081
 - View indexes
 - Export data
 
-### Seed 10,000 Records
+### Seed Database with Sample Data
 
+**Seed 10,000 records:**
 ```bash
-# Linux/macOS
-./seed-database.sh
-
-# Windows
-seed-database.bat
+curl -X POST "http://localhost:8080/api/admin/seed?count=10000"
 ```
 
 **Custom record count:**
 ```bash
-# Linux/macOS
-SEED_COUNT=1000 ./seed-database.sh
+curl -X POST "http://localhost:8080/api/admin/seed?count=1000"
+```
 
-# Windows
-set SEED_COUNT=1000
-seed-database.bat
+**Clear all data:**
+```bash
+curl -X DELETE "http://localhost:8080/api/admin/clear"
+```
+
+**Check database stats:**
+```bash
+curl "http://localhost:8080/api/admin/stats"
 ```
 
 ### MongoDB Command Line (Alternative)
